@@ -39,8 +39,9 @@
 
         .word,
         .moss,
-        .underground {
-            transition: all 1s ease;
+        .underground,
+        .word:hover {
+            transition: font-size 1s ease, opacity 1s ease;
             user-select: none;
 
         }
@@ -78,7 +79,6 @@
 
         .word:hover {
             font-size: 12px !important;
-            transition: all 1s ease;
             letter-spacing: 6px;
             width: 150px;
             text-align: center;
@@ -207,7 +207,7 @@
     let mosses = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png"];
     let wind = document.getElementById('x');
     let water = document.getElementById('y');
-    let display = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
+    let display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
     clock.innerHTML = display;
 
     let time = new Date().getUTCHours();
@@ -313,7 +313,7 @@ a desire for wrongness until it’s, well, here.`;
         bury(water.value);
     }
     function changeSun(value) {
-        display = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
+        display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
         clock.innerHTML = display;
         let words = document.querySelectorAll('.word');
         let sunDiv = document.getElementById('sun');
