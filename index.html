@@ -335,9 +335,7 @@ a desire for wrongness until it’s, well, here.`;
     }
     function changeSun(value) {
         updateClock()
-        display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
-        display = display.split(",");
-        clock.innerHTML = "Phoenix, AZ " + display[1];
+
         let words = document.querySelectorAll('.word');
 
         night.style.opacity = nightCheck(value);
