@@ -72,6 +72,7 @@
             opacity: 0 !important;
             font-size: 12px !important;
             z-index: -10;
+            transition: opacity 1s ease;
 
         }
 
@@ -121,13 +122,16 @@
         span {
             margin: 0px 15px;
             font-family: monospace;
+            font-size: 10px;
 
         }
 
         h1 {
             line-height: 10px;
+            font-size: 20px;
+            letter-spacing: 1px;
             font-family: times;
-            margin: 0px 10px;
+            margin: 0px 20px;
 
         }
 
@@ -159,6 +163,26 @@
             pointer-events: none;
         }
 
+        #aboutLabel {
+            text-decoration: underline;
+            letter-spacing: 0px;
+            cursor: pointer;
+
+
+        }
+
+        #about {
+            width: 400px;
+            color: white;
+            height: auto;
+            position: absolute;
+            letter-spacing: 1px;
+            top: 40px;
+            transition: opacity 1s ease;
+            margin: 20px;
+
+        }
+
         @keyframes mossGrow {
             from {
                 transform: scale(100%);
@@ -187,12 +211,21 @@
 
     <div id="elements">
         <h1>biocrust</h1>
+        <span id="aboutLabel">what's this?</span>
 
         <span>wind </span><input type="range" min="1" max="10" value="5" step="1" id="x">
         <span>water </span> <input type="range" min="25" max="100" value="25" step="1" id="y">
         <span id="sunLabel"></span>
-        <div id="sun">the sun</div>
+
     </div>
+    <div id="about" class="underground"><span style="margin-left:0px">about this project</span><br><br>
+        this is placeholder! kRaYtAhaNy is a symbiotic lichenous species comprised of two poetry friends whose
+        collaborative ponderings are infected with the spore-like and sporadic fruiting bodies: mycelial poetics and
+        subterranean imaginations which nurture into being webthings, zinethings, and text objects. this is placeholder!
+    </div>
+
+    <div id="sun">the sun</div>
+
     <div id="shade"></div>
 
 </body>
@@ -202,23 +235,25 @@
     let lastRender = 0;
     let offset = 100;
     let clock = document.getElementById('sunLabel')
-
+    let sunDiv = document.getElementById('sun');
+    let night = document.getElementById('shade');
     let crust = document.body;
+    let aboutLabel = document.getElementById('aboutLabel');
+    let about = document.getElementById('about');
+    aboutLabel.addEventListener('click', event => {
+        about.classList.toggle('underground');
+    });
+
     let mosses = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png"];
     let wind = document.getElementById('x');
     let water = document.getElementById('y');
-    let display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
-    clock.innerHTML = display;
+
+    updateClock()
 
     let time = new Date().getUTCHours();
     time = phxTime(time);
-    console.log(time);
-    console.log(display);
 
     function phxTime(time) {
-        console.log(time)
-
-        // lol there is a smarter way but i'm tired
         if (time >= 7) {
 
             return time - 7;
@@ -229,27 +264,6 @@
 
             return 24 - remainder;
         }
-
-        // else if (time == 6) {
-        //     return 23;
-        // }
-        // else if (time == 5) {
-        //     return 22;
-        // }
-        // else if (time == 4) {
-        //     return 21;
-        // }
-        // else if (time == 3) {
-        //     return 20;
-        // }
-        // else if (time == 2) {
-        //     return 19;
-        // }
-        // else if (time == 1) {
-        //     return 18;
-        // }
-        // else if (time == 0) {
-        //     return 17;
 
     }
 
@@ -310,19 +324,32 @@ a desire for wrongness until it’s, well, here.`;
             word.style.setProperty('letter-spacing', 4 + value * 0.5 + 'px');
 
         });
-        bury(water.value);
+        for (let i = 0; i < water.value; i++) {
+            bury();
+        }
+    }
+    function updateClock() {
+        display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
+        display = display.split(",");
+        clock.innerHTML = "Phoenix, AZ " + display[1];
     }
     function changeSun(value) {
+        updateClock()
         display = new Date().toLocaleString('en-US', {timeZone: 'America/Phoenix'});
-        clock.innerHTML = display;
+        display = display.split(",");
+        clock.innerHTML = "Phoenix, AZ " + display[1];
         let words = document.querySelectorAll('.word');
-        let sunDiv = document.getElementById('sun');
-        let night = document.getElementById('shade');
+
         night.style.opacity = nightCheck(value);
         if (nightCheck(value) == 0) {
-            let stretchAmt = 1 + Math.abs(value) / 25;
+            let stretchAmt = 1 + value / 25;
             words.forEach(word => {
-                word.style.setProperty('transform', 'skew(' + value * -2 + 'deg) scaleY(' + stretchAmt + ')');
+                if (value < 12) {
+                    word.style.setProperty('transform', 'skew(' + value * 2 + 'deg) scaleY(' + stretchAmt + ')');
+                }
+                if (value >= 12) {
+                    word.style.setProperty('transform', 'skew(' + value * -2 + 'deg) scaleY(' + stretchAmt + ')');
+                }
             });
         }
         // sun comes on screen around 5am, goes away around 6
@@ -393,9 +420,10 @@ a desire for wrongness until it’s, well, here.`;
                 div.classList.add('word');
                 div.classList.add('underground');
 
-                let x = Math.floor(Math.random() * window.innerWidth * multiplier) - offset * multiplier;
+                let ooo = window.innerWidth - offset;
+                let x = Math.floor(Math.random() * ooo * multiplier) + offset;
                 y += window.innerHeight * multiplier / words.length * 2;
-                div.style.left = x + offset + 'px';
+                div.style.left = x + 'px';
                 div.style.top = y + offset + 'px';
 
                 div.innerHTML = word;
@@ -443,7 +471,7 @@ a desire for wrongness until it’s, well, here.`;
     }
 
 
-    function bury(waterValue) {
+    function bury() {
         let words = document.querySelectorAll('.word');
         let visible = [];
         words.forEach(word => {
@@ -451,10 +479,10 @@ a desire for wrongness until it’s, well, here.`;
                 visible.push(word);
             }
         })
-        // for (let i = 0; i < waterValue; i++) {
         let r = Math.floor(Math.random() * visible.length);
-        visible[r].classList.add('underground');
-        // }
+        console.log(visible[r])
+        visible[r].classList.add('.underground');
+
 
     }
 
