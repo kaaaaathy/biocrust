@@ -1,0 +1,467 @@
+<html>
+
+<head>
+    <title>~ b i o c r u s t ~</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        html {
+            background-color: #352715;
+            margin: 0 !important;
+            overscroll-behavior: none;
+        }
+
+        body {
+            background-image: url('crust.png');
+            background-size: cover;
+            background-repeat: repeat;
+            margin: 0 !important;
+            width: 300%;
+            height: 300%;
+        }
+
+        #roots {
+            width: 300%;
+            height: 300%;
+            margin: 0;
+            z-index: 0;
+            user-select: none;
+            background-image: url('roots.svg');
+            background-size: 30%;
+            opacity: 0.5;
+            background-repeat: repeat;
+            position: absolute;
+            mix-blend-mode: multiply;
+            top: 0px;
+            left: 0px;
+
+        }
+
+        .word,
+        .moss,
+        .underground {
+            transition: all 1s ease;
+            user-select: none;
+
+        }
+
+        .word {
+            position: absolute;
+            color: rgb(154, 205, 50);
+            font-size: 20px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            font-family: 'Times', Arial, Helvetica, sans-serif;
+            z-index: 1;
+            text-align: center;
+            padding: 0px 20px;
+            animation: 20s sway 10s infinite alternate;
+            -webkit-text-stroke: 5px rgb(53, 39, 21);
+            paint-order: stroke fill;
+            width: 150px;
+            text-align: center;
+            transform-origin: 50%;
+            opacity: 1;
+
+
+        }
+
+
+        .underground {
+            opacity: 0 !important;
+            font-size: 12px !important;
+            z-index: -10;
+
+        }
+
+
+
+        .word:hover {
+            font-size: 12px !important;
+            transition: all 1s ease;
+            letter-spacing: 6px;
+            width: 150px;
+            text-align: center;
+            opacity: 1;
+
+
+        }
+
+
+
+
+
+        .moss {
+            width: 60px;
+            height: 60px;
+            opacity: 0.5;
+            background-size: contain;
+            position: absolute;
+            background-repeat: no-repeat;
+            z-index: 0;
+            mix-blend-mode: exclusion;
+            text-align: center;
+            animation: 10s mossGrow alternate infinite;
+
+        }
+
+        #elements {
+            color: white;
+            display: flex;
+            height: 40px;
+            flex-flow: row nowrap;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+
+        }
+
+        span {
+            margin: 0px 15px;
+            font-family: monospace;
+
+        }
+
+        h1 {
+            line-height: 10px;
+            font-family: times;
+            margin: 0px 10px;
+
+        }
+
+
+
+        #sun {
+            height: 60px;
+            width: 33%;
+            position: fixed;
+            top: -50px;
+            left: 33%;
+            background-color: white;
+            border-radius: 100%;
+            filter: blur(30px);
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        #shade {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            background-color: darkslateblue;
+            mix-blend-mode: multiply;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        @keyframes mossGrow {
+            from {
+                transform: scale(100%);
+            }
+
+            to {
+                transform: scale(150%);
+            }
+        }
+
+        @keyframes sway {
+            from {
+                margin-left: 0px;
+            }
+
+            to {
+                margin-left: 20px;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="roots"></div>
+
+    <div id="elements">
+        <h1>biocrust</h1>
+
+        <span>wind </span><input type="range" min="1" max="10" value="5" step="1" id="x">
+        <span>water </span> <input type="range" min="25" max="100" value="25" step="1" id="y">
+        <span id="sunLabel"></span>
+        <div id="sun">the sun</div>
+    </div>
+    <div id="shade"></div>
+
+</body>
+<script type="text/javascript">
+    let multiplier = 2.9;
+    let frameInterval = 1000; // ~33.33ms
+    let lastRender = 0;
+    let offset = 100;
+    let clock = document.getElementById('sunLabel')
+
+    let crust = document.body;
+    let mosses = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png"];
+    let wind = document.getElementById('x');
+    let water = document.getElementById('y');
+    let display = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
+    clock.innerHTML = display;
+
+    let time = new Date().getUTCHours();
+    time = phxTime(time);
+    console.log(time);
+    console.log(display);
+
+    function phxTime(time) {
+        console.log(time)
+
+        // lol there is a smarter way but i'm tired
+        if (time >= 7) {
+
+            return time - 7;
+        }
+        else {
+            let remainder = 7 - time;
+            console.log(remainder)
+
+            return 24 - remainder;
+        }
+
+        // else if (time == 6) {
+        //     return 23;
+        // }
+        // else if (time == 5) {
+        //     return 22;
+        // }
+        // else if (time == 4) {
+        //     return 21;
+        // }
+        // else if (time == 3) {
+        //     return 20;
+        // }
+        // else if (time == 2) {
+        //     return 19;
+        // }
+        // else if (time == 1) {
+        //     return 18;
+        // }
+        // else if (time == 0) {
+        //     return 17;
+
+    }
+
+    wind.addEventListener("input", (event) => {
+        changeWind(event.target.value);
+    });
+    water.addEventListener("input", (event) => {
+        changeWater(event.target.value);
+    });
+
+
+
+    let text = `another world there 
+     seeping
+       to partake in 
+         this here    
+            our sediment     
+               at times
+                   unknowingly
+ there against my
+outer layers
+                   sensorializing
+           the presumed edge
+                my proprioception
+                             unquestions
+                               to maintain
+                         a semblance
+                      of know-how
+                   in the midst 
+                     of, well,
+                        it all
+ but maybe it smooths out any wrinkles without me even knowing or seeing
+loneliness with no exact locus, isn’t absence either, some kind of insistence on knowing something else. anyway.
+The author of milkweed is milkweed, the writer of the pink flower. 
+the soil an inkwell
+“HTML is pronounced hache tee em elle, do not say hittamel”   
+hittite clay dictionary (how did we get here/)
+i’d like to reboot not to update; close all windows, choose not to save. 
+file > open > remember this?
+without a visible marker of distance, this text extends, smoothing over (perhaps) it’s sporadicity.
+spore seeds 
+stars diatribing their light across the distance, beautiful, bliss-ridden.
+meanwhile, a diatom and plankton becoming friends
+oooh the heart a storm. friends around each with a weight weighing. how to be in some small measure an upward force alongside their straining.
+
+adore the typo as an invitation. oh and yes i abhor it when it disrupts my ghosted sheen of “rightness”
+a desire for wrongness until it’s, well, here.`;
+
+
+    let words = text.split(' ');
+    function scale(number, inMin, inMax, outMin, outMax) {
+        return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+    function changeWind(value) {
+        let words = document.querySelectorAll('.word');
+        words.forEach(word => {
+            word.style.animationDuration = 20 / value + "s";
+            word.style.setProperty('letter-spacing', 4 + value * 0.5 + 'px');
+
+        });
+        bury(water.value);
+    }
+    function changeSun(value) {
+        display = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
+        clock.innerHTML = display;
+        let words = document.querySelectorAll('.word');
+        let sunDiv = document.getElementById('sun');
+        let night = document.getElementById('shade');
+        night.style.opacity = nightCheck(value);
+        if (nightCheck(value) == 0) {
+            let stretchAmt = 1 + Math.abs(value) / 25;
+            words.forEach(word => {
+                word.style.setProperty('transform', 'skew(' + value * -2 + 'deg) scaleY(' + stretchAmt + ')');
+            });
+        }
+        // sun comes on screen around 5am, goes away around 6
+        sunDiv.style.left = scale(value, 5, 18, -400, window.innerWidth) + "px";
+    }
+
+    function nightCheck(value) {
+        // check to see if between sunrise or sunset
+        if (value > 17 && value <= 24) {
+            return 0.03 * value;
+        }
+        if (value > 0 && value < 5) {
+            return 0.95 / value;
+        }
+        else {
+            return 0;
+        }
+    }
+    function changeWater(value) {
+        frameInterval = 1000 / value * 50;
+
+        let mossDivs = document.querySelectorAll('.moss');
+        let words = document.querySelectorAll('.word');
+
+        mossDivs.forEach(moss => {
+            moss.style.width = value * 2 + 'px';
+            moss.style.height = value * 2 + 'px';
+            moss.style.translate = '-' + value + 'px ' + '-' + value / 2 + 'px';
+
+        })
+        words.forEach(word => {
+            word.style.fontSize = value / 4 + 12 + 'px';
+            word.style.translate = '-' + value / 3 + 'px ' + ' 0px';
+
+        })
+
+    }
+
+
+
+
+
+    function mossDiv() {
+        let moss = document.createElement('div');
+        let w = Math.floor(Math.random() * 50) + 30;
+        moss.classList.add('moss');
+        moss.classList.add('underground');
+
+        moss.style.width = w + 'px';
+        moss.style.height = w + 'px';
+
+        let m = Math.floor(Math.random() * mosses.length);
+        moss.style.backgroundImage = 'url("mosses/' + mosses[m] + '")';
+        return moss;
+    }
+    function makeMoss(x, y) {
+        let moss = mossDiv();
+        moss.style.left = x + 'px';
+        moss.style.top = y + offset + 'px';
+        crust.append(moss);
+    }
+    function makeText() {
+        let y = 0;
+
+        words.forEach(word => {
+            if (word.length > 1) {
+                let div = document.createElement('div');
+                div.classList.add('word');
+                div.classList.add('underground');
+
+                let x = Math.floor(Math.random() * window.innerWidth * multiplier) - offset * multiplier;
+                y += window.innerHeight * multiplier / words.length * 2;
+                div.style.left = x + offset + 'px';
+                div.style.top = y + offset + 'px';
+
+                div.innerHTML = word;
+                let s = Math.floor(Math.random() * 10);
+                div.style.animationDelay = s + "s";
+
+                div.addEventListener('click', (event) => {
+                    if (!div.classList.contains('underground')) {
+                        div.classList.toggle('underground');
+                    }
+                });
+                let d = Math.floor(Math.random() * 40) - 20;
+                div.style.setProperty('transform', 'rotate(' + d + 'deg)');
+                crust.append(div);
+                if (word.includes('m') || word.includes('o') || word.includes('s')) {
+                    makeMoss(x, y);
+                }
+            }
+        });
+
+
+    }
+
+    function animateText(timestamp) {
+
+        const elapsed = timestamp - lastRender;
+
+        if (elapsed >= frameInterval) {
+            lastRender = timestamp - (elapsed % frameInterval);
+
+            let words = document.querySelectorAll('.word');
+            let mosses = document.querySelectorAll('.moss');
+
+            let r = Math.floor(Math.random() * words.length);
+            let m = Math.floor(Math.random() * mosses.length);
+
+            words[r].classList.toggle('underground');
+            mosses[m].classList.toggle('underground');
+
+        }
+        changeSun(time);
+
+        requestAnimationFrame(animateText);
+
+    }
+
+
+    function bury(waterValue) {
+        let words = document.querySelectorAll('.word');
+        let visible = [];
+        words.forEach(word => {
+            if (!word.classList.contains('underground')) {
+                visible.push(word);
+            }
+        })
+        // for (let i = 0; i < waterValue; i++) {
+        let r = Math.floor(Math.random() * visible.length);
+        visible[r].classList.add('underground');
+        // }
+
+    }
+
+    makeText();
+    requestAnimationFrame(animateText);
+
+</script>
+
+
+</html>
