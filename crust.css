@@ -178,8 +178,9 @@
             height: auto;
             position: absolute;
             letter-spacing: 1px;
-            top: 40px;
-            margin: 20px;
+            top: 50px;
+            margin: 15px;
+            z-index: 6;
 
         }
 
