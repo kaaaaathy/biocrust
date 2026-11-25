@@ -29,6 +29,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            pointer-events: none;
         }
 
         .word,
@@ -171,6 +172,10 @@
 
         }
 
+        a {
+            color: yellowgreen;
+        }
+
         #about {
             opacity: 0;
             transition: opacity 1s ease;
@@ -181,9 +186,7 @@
             letter-spacing: 1px;
             top: 50px;
             margin: 15px;
-            z-index: 6;
-            pointer-events: none;
-
+            z-index: 100;
         }
 
 
