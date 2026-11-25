@@ -5,7 +5,7 @@
             background-image: url('crust.jpg');
             background-size: 600px;
             background-repeat: repeat;
-            cursor: nw-resize !important;
+            cursor: default !important;
             /* cursor: url("earthworm.png"), auto !important; */
         }
 
@@ -47,7 +47,7 @@
         }
 
         input[type="range"] {
-            cursor: nw-resize;
+            cursor: grab;
             accent-color: yellowgreen !important;
         }
 
@@ -78,7 +78,7 @@
             width: 150px;
             text-align: center;
             opacity: 1;
-            cursor: help;
+            cursor: pointer;
 
 
         }
@@ -182,13 +182,15 @@
             top: 50px;
             margin: 15px;
             z-index: 6;
+            pointer-events: none;
 
         }
 
 
 
+        /* img == rock. this is for rocks */
         img {
-            width: 300px;
+            width: 250px;
             opacity: 1;
             position: absolute;
             cursor: grab;

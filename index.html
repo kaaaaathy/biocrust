@@ -18,7 +18,8 @@
     </div>
 
     <div id="about"><span style="margin-left:0px">underground paratext</span><br><br>
-        this site was lovingly handcoded with basic javascript and uses spencer chang's play.html library.
+        this site was lovingly handcoded with basic javascript and uses spencer chang's <a href=''
+            target="_blank">play.html library</a>.
         this is placeholder! kRaYtAhaNy is a symbiotic lichenous species comprised of two poetry friends whose
         collaborative ponderings are infected with the spore-like and sporadic fruiting bodies: mycelial poetics and
         subterranean imaginations which nurture into being webthings, zinethings, and text objects. this is placeholder!
@@ -54,7 +55,7 @@
     let multiplier = 2.9;
 
     // IMAGES AND TEXT
-    let mosses = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png"];
+    let mosses = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png"];
     let text = `another world there seeping to partake in this here our sediment at times unknowingly there against my outer layers sensorializing the presumed edge my proprioception unquestions to maintain a semblance of know-how in the midst of, well, it all but maybe it smooths out any wrinkles without me even knowing or seeing loneliness with no exact locus, isn’t absence either, some kind of insistence on knowing something else. anyway. The author of milkweed is milkweed, the writer of the pink flower. the soil an inkwell HTML is pronounced hache tee em elle, do not say hittamel hittite clay dictionary how did we get here i’d like to reboot not to update close all windows, choose not to save. file  open  remember this? without a visible marker of distance, this text extends, smoothing over perhaps it’s sporadicity. spore seeds stars diatribing their light across the distance, beautiful, bliss-ridden. meanwhile, a diatom and plankton becoming friends oooh the heart a storm. friends around each with a weight weighing. how to be in some small measure an upward force alongside their straining. adore the typo as an invitation. oh and yes i abhor it when it disrupts my ghosted sheen of rightness a desire for wrongness until it’s, well, here.`;
     let words = text.split(' ');
 
@@ -187,12 +188,17 @@
         let d = Math.floor(Math.random() * 360);
         moss.style.setProperty('rotate', d + 'deg');
         let m = Math.floor(Math.random() * mosses.length);
+
         moss.style.backgroundImage = 'url("moss+rocks/' + mosses[m] + '")';
         return moss;
     }
 
     function makeMoss(x, y) {
         let moss = mossDiv();
+        moss.addEventListener('click', event => {
+            moss.style.setProperty('scale', '50%');
+            console.log("moss clicked");
+        })
         moss.style.left = x + 'px';
         moss.style.top = y + offset + 'px';
         crust.append(moss);
