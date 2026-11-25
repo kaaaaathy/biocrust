@@ -1,0 +1,255 @@
+        html {
+            background-color: #352715;
+            margin: 0 !important;
+            overscroll-behavior: none;
+            background-image: url('crust.png');
+            background-size: 600px;
+            background-repeat: repeat;
+            cursor: nw-resize !important;
+            /* cursor: url("earthworm.png"), auto !important; */
+        }
+
+        body {
+            width: 300%;
+            height: 300%;
+            user-select: none;
+        }
+
+        input {
+            cursor: nw-resize;
+        }
+
+        #roots {
+            z-index: 0;
+            width: 300%;
+            height: 300%;
+            background-image: url('roots.svg');
+            background-size: 33%;
+            opacity: 0.5;
+            background-repeat: repeat;
+            mix-blend-mode: multiply;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .word,
+        .moss,
+        .underground,
+        .word:hover {
+            transition: all 2s ease;
+        }
+
+        .underground {
+            opacity: 0 !important;
+            font-size: 12px !important;
+            z-index: -10;
+            /* transition: all 2s ease; */
+            /* transition: font-size 1s ease, opacity 1s ease; */
+        }
+
+
+        .word {
+            position: absolute;
+            color: rgb(154, 205, 50);
+            font-size: 20px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            font-family: 'Times', Arial, Helvetica, sans-serif;
+            z-index: 4;
+            text-align: center;
+            padding: 0px 20px;
+            animation: 10s sway 5s infinite alternate;
+            -webkit-text-stroke: 5px rgb(53, 39, 21);
+            paint-order: stroke fill;
+            width: 150px;
+            text-align: center;
+            transform-origin: 50%;
+            opacity: 1;
+        }
+
+
+
+        .word:hover {
+            font-size: 12px !important;
+            letter-spacing: 6px;
+            width: 150px;
+            text-align: center;
+            opacity: 1;
+            cursor: help;
+
+
+        }
+
+
+        .moss {
+            width: 100px;
+            height: 100px;
+            opacity: 0.5;
+            background-size: contain;
+            position: absolute;
+            background-repeat: no-repeat;
+            z-index: 0;
+            mix-blend-mode: darken;
+            text-align: center;
+            animation: 10s mossGrow alternate infinite;
+
+        }
+
+
+
+        #elements {
+            color: white;
+            display: flex;
+            height: 40px;
+            flex-flow: row nowrap;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            margin: 10px;
+
+        }
+
+        span {
+            margin: 0px 5px 0px 30px;
+            font-family: monospace;
+            font-size: 10px;
+
+        }
+
+        h1 {
+            line-height: 10px;
+            font-size: 20px;
+            letter-spacing: 1px;
+            font-family: times;
+            margin-left: 10px;
+
+        }
+
+
+
+        #sun {
+            height: 60px;
+            width: 33%;
+            position: fixed;
+            top: -50px;
+            left: 33%;
+            background-color: white;
+            border-radius: 100%;
+            filter: blur(30px);
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        #shade {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            background-color: rgb(61, 55, 98);
+            mix-blend-mode: multiply;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+
+        #aboutLabel {
+            text-decoration: underline;
+            letter-spacing: 0px;
+            cursor: help;
+
+        }
+
+        input,
+        #aboutLabel {
+            padding: 10px 0px;
+
+        }
+
+        #about {
+            opacity: 0;
+            transition: opacity 1s ease;
+            width: 400px;
+            color: white;
+            height: auto;
+            position: absolute;
+            letter-spacing: 1px;
+            top: 40px;
+            margin: 20px;
+
+        }
+
+
+
+        img {
+            width: 300px;
+            opacity: 1;
+            position: absolute;
+            cursor: grab;
+            z-index: 5;
+
+        }
+
+        #rock1 {
+            top: 1500px;
+            left: 1600px;
+        }
+
+        #rock2 {
+            top: 100px;
+            left: 1420px;
+        }
+
+        #rock3 {
+            top: 980px;
+            left: 500px;
+        }
+
+        #rock4 {
+            top: 1060px;
+            left: 900px;
+        }
+
+        #rock5 {
+            top: 930px;
+            left: 10px;
+        }
+
+        #rock6 {
+            top: 220px;
+            left: 500px;
+        }
+
+        #rock7 {
+            top: 1800px;
+            left: 440px;
+        }
+
+
+        @keyframes mossGrow {
+            from {
+                transform: scale(100%);
+            }
+
+            to {
+                transform: scale(120%);
+            }
+        }
+
+
+
+
+        @keyframes sway {
+            from {
+                margin-left: 0px;
+            }
+
+            to {
+                margin-left: 20px;
+
+            }
+        }
