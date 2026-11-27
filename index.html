@@ -95,7 +95,7 @@
     function updateClock() {
         display = new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' });
         display = display.split(",");
-        clock.innerHTML = "Phoenix, AZ " + display[1];
+        clock.innerHTML = "Phoenix, AZ &nbsp;" + display[1];
     }
 
     function scale(number, inMin, inMax, outMin, outMax) {
@@ -122,7 +122,7 @@
         mossDivs.forEach(moss => {
             moss.style.width = value * 4 + 'px';
             moss.style.height = value * 4 + 'px';
-            moss.style.translate = '-' + value * 4 + 'px ' + '-' + value * 2 + 'px';
+            moss.style.translate = '-' + value * 2 + 'px ' + '-' + value * 2 + 'px';
 
         })
         words.forEach(word => {
